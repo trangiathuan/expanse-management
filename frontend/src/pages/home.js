@@ -102,8 +102,8 @@ const Home = () => {
 
     return (
         <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
-            <div className="shadow-lg w-[550px] min-h-screen mt-2 bg-gray-100 rounded-lg overflow-y-hidden">
-                <div className="flex flex-col items-center mt-4 min-h-screen bg-gray-100">
+            <div className="shadow-lg w-[550px] min-h-screen mt-2 mb-2 bg-gray-100 rounded-lg overflow-y-hidden">
+                <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
                     <div className=" shadow-lg rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex space-x-6">
                             <img className="w-16 h-16 rounded-full object-cover" src='https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-6/479512658_1351962522704344_8795569477034108113_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHZ3GtCb8fAyfyxbYVX7ws9e4aEFlagktJ7hoQWVqCS0m5PPEugp9fl3txXdOHWO-E_nd0ucVcxCcEKPgW77XLW&_nc_ohc=Kq0UjzbkW-IQ7kNvwFdzh1f&_nc_oc=AdmWwmMe2Hxjg7SSH1X_Wv7_LmY0ZLXOiiW3181atfYtCGdG2pc8Q5NhMzHQo9ceDZIdGI9GyBjNY4dDwbgniB8E&_nc_zt=23&_nc_ht=scontent.fsgn18-1.fna&_nc_gid=35A_POF1O0iUUP30LrvZHQ&oh=00_AfEDzRy69r1xfulO2CjNHwMAinJKFoPQx6dr1zkupSKyTA&oe=680FEC07' />
