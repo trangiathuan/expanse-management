@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 const Home = () => {
     const [history, setHistory] = useState(true)
     const [addExpense, setAddExpense] = useState(false)
+    const [qr, setQr] = useState(false)
+
 
 
     const [expenses, setExpense] = useState([])
@@ -103,10 +105,10 @@ const Home = () => {
             <div className="shadow-lg w-[550px] min-h-screen mt-2 bg-gray-100 rounded-lg overflow-x-hidden">
                 <div className="flex flex-col items-center mt-5 min-h-screen bg-gray-100">
                     <div className=" shadow-lg rounded-lg p-6 mb-6 w-[375px] max-w-sm">
-                        <div className="flex items-centr space-x-5">
+                        <div className="flex items-centr space-x-6">
                             <img className="w-16 h-16 rounded-full object-cover" src='https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-6/479512658_1351962522704344_8795569477034108113_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHZ3GtCb8fAyfyxbYVX7ws9e4aEFlagktJ7hoQWVqCS0m5PPEugp9fl3txXdOHWO-E_nd0ucVcxCcEKPgW77XLW&_nc_ohc=Kq0UjzbkW-IQ7kNvwFdzh1f&_nc_oc=AdmWwmMe2Hxjg7SSH1X_Wv7_LmY0ZLXOiiW3181atfYtCGdG2pc8Q5NhMzHQo9ceDZIdGI9GyBjNY4dDwbgniB8E&_nc_zt=23&_nc_ht=scontent.fsgn18-1.fna&_nc_gid=35A_POF1O0iUUP30LrvZHQ&oh=00_AfEDzRy69r1xfulO2CjNHwMAinJKFoPQx6dr1zkupSKyTA&oe=680FEC07' />
                             <p className="text-2xl font-bold">Trần Gia Thuận</p>
-                            <QrCode className="w-10 h-10 mt-1" />
+                            <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 -mt-0 ms-0 cursor-pointer" />
                         </div>
                         <div>
                             <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]"><span className="text-black">Số dư: </span>{totalMoney.total ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 0}</p>
@@ -128,36 +130,55 @@ const Home = () => {
                             <p className="p-2 font-semibold">Lịch sử</p>
                         </div>
                     </div>
+                    {qr && (
+                        <div className="fixed inset-0 flex justify-center pt-48 z-50 overflow-x-hidden">
+                            <div className="absolute inset-0 bg-black opacity-50"></div>
+                            <div className="relative z-10">
+                                <div className="flex w-[270px] h-[290px] bg-white rounded-lg">
+                                    <div className="flex">
+                                        <X onClick={() => { setQr(false) }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
+                                    </div>
+                                    <div>
+                                        <img className="rounded-lg" src='https://res.cloudinary.com/dteuqunrm/image/upload/v1745506633/QR_code_hpbssw.jpg' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+
                     {history && (
-                        <div className='w-full max-w-[375px] mt-4'>
-                            <div className='flex w-full'>
-                                <div className="ms-auto space-x-2">
-                                    <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
-                                        <option value=''>Loại</option>
-                                        <option value='Thu nhập'>Thu nhập</option>
-                                        <option value='Chi tiêu'>Chi tiêu</option>
-                                    </select>
-                                    <select onChange={(e) => setFilterDate(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
-                                        <option value=''>Tất cả</option>
-                                        <option value={new Date().toLocaleDateString('vi-VN')}>Hôm nay</option>
-                                        <option value={`/1/${new Date().getFullYear()}`}>Tháng 1</option>
-                                        <option value={`/2/${new Date().getFullYear()}`}>Tháng 2</option>
-                                        <option value={`/3/${new Date().getFullYear()}`}>Tháng 3</option>
-                                        <option value={`/4/${new Date().getFullYear()}`}>Tháng 4</option>
-                                        <option value={`/5/${new Date().getFullYear()}`}>Tháng 5</option>
-                                        <option value={`/6/${new Date().getFullYear()}`}>Tháng 6</option>
-                                        <option value={`/7/${new Date().getFullYear()}`}>Tháng 7</option>
-                                        <option value={`/8/${new Date().getFullYear()}`}>Tháng 8</option>
-                                        <option value={`/9/${new Date().getFullYear()}`}>Tháng 9</option>
-                                        <option value={`/10/${new Date().getFullYear()}`}>Tháng 10</option>
-                                        <option value={`/11/${new Date().getFullYear()}`}>Tháng 11</option>
-                                        <option value={`/12/${new Date().getFullYear()}`}>Tháng 12</option>
-                                    </select>
+
+                        expenses.length > 0 ? (
+                            <div className='w-full max-w-[375px] mt-4'>
+                                <div className='flex w-full'>
+                                    <div className="ms-auto space-x-2">
+                                        <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
+                                            <option value=''>Loại</option>
+                                            <option value='Thu nhập'>Thu nhập</option>
+                                            <option value='Chi tiêu'>Chi tiêu</option>
+                                        </select>
+                                        <select onChange={(e) => setFilterDate(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
+                                            <option value=''>Tất cả</option>
+                                            <option value={new Date().toLocaleDateString('vi-VN')}>Hôm nay</option>
+                                            <option value={`/1/${new Date().getFullYear()}`}>Tháng 1</option>
+                                            <option value={`/2/${new Date().getFullYear()}`}>Tháng 2</option>
+                                            <option value={`/3/${new Date().getFullYear()}`}>Tháng 3</option>
+                                            <option value={`/4/${new Date().getFullYear()}`}>Tháng 4</option>
+                                            <option value={`/5/${new Date().getFullYear()}`}>Tháng 5</option>
+                                            <option value={`/6/${new Date().getFullYear()}`}>Tháng 6</option>
+                                            <option value={`/7/${new Date().getFullYear()}`}>Tháng 7</option>
+                                            <option value={`/8/${new Date().getFullYear()}`}>Tháng 8</option>
+                                            <option value={`/9/${new Date().getFullYear()}`}>Tháng 9</option>
+                                            <option value={`/10/${new Date().getFullYear()}`}>Tháng 10</option>
+                                            <option value={`/11/${new Date().getFullYear()}`}>Tháng 11</option>
+                                            <option value={`/12/${new Date().getFullYear()}`}>Tháng 12</option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
-                            </div>
-                            {expenses.length > 0 ? (
-                                filterExpenses.map((item, index) => {
+                                {filterExpenses.map((item, index) => {
                                     const date = new Date(item.date);
                                     const formattedDate = isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString('vi-VN');
                                     return (
@@ -174,14 +195,11 @@ const Home = () => {
                                             </div>
                                         </div>
                                     );
-                                })
-                            ) :
-                                (
-                                    <div className="text-center mt-20">Loading...</div>
-                                )
-                            }
-
-                        </div>
+                                })}
+                            </div>
+                        ) : (
+                            <div className="text-center mt-20">Loading...</div>
+                        )
                     )}
                     {detail && (
                         <div className="fixed inset-0 flex justify-center items-center z-50 overflow-x-hidden">
@@ -190,7 +208,7 @@ const Home = () => {
                                 <div className="w-[270px] h-[290px] bg-white rounded-lg">
                                     <div className="flex justify-center">
                                         <p className=" pt-2 text-2xl font-bold">Chi tiết</p>
-                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] pt-2 w-8 h-8" />
+                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
                                     </div>
                                     <div className="space-y-4 p-5 ps-10">
                                         <div className="flex space-x-2">
