@@ -151,7 +151,7 @@ const Home = () => {
                                 </div>
 
                             </div>
-                            {expenses ? (
+                            {expenses.length > 0 ? (
                                 filterExpenses.map((item, index) => {
                                     const date = new Date(item.date);
                                     const formattedDate = isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString('vi-VN');
@@ -172,7 +172,7 @@ const Home = () => {
                                 })
                             ) :
                                 (
-                                    <div>Loading...</div>
+                                    <div className="text-center mt-20">Loading...</div>
                                 )
                             }
 
