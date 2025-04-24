@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChartNoAxesCombined, Eye, History, PlusCircle, QrCode } from "lucide-react";
+import { ChartNoAxesCombined, Eye, History, PlusCircle, QrCode, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import API from "../configs/API";
 import { jwtDecode } from "jwt-decode";
@@ -11,6 +11,11 @@ const Home = () => {
 
     const [expenses, setExpense] = useState([])
     const [totalMoney, setTotalMoney] = useState({})
+    const [detail, setDetail] = useState(null)
+
+    console.log(detail);
+
+
 
     const [filterDate, setFilterDate] = useState('')
     const [filterType, setFilterType] = useState('')
@@ -94,8 +99,8 @@ const Home = () => {
 
 
     return (
-        <div className="w-screen overflow-x-hidden flex justify-center bg-gray-200">
-            <div className="shadow-lg w-[550px] min-h-screen mt-2 bg-gray-100 rounded-lg">
+        <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
+            <div className="shadow-lg w-[550px] min-h-screen mt-2 bg-gray-100 rounded-lg overflow-x-hidden">
                 <div className="flex flex-col items-center mt-5 min-h-screen bg-gray-100">
                     <div className=" shadow-lg rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex items-centr space-x-5">
@@ -159,7 +164,7 @@ const Home = () => {
                                         <div key={index} className="shadow-lg rounded-lg mt-2 bg-white">
                                             <div className="cursor-pointer flex justify-between">
                                                 <p className="mt-1 ms-2 text-sm font-semibold text-gray-500">{formattedDate}</p>
-                                                <p className="mt-1 me-2 text-sm font-semibold text-gray-500 flex items-center"><Eye className="w-4 h-4 me-1" />Chi tiết</p>
+                                                <p onClick={() => { setDetail(item) }} className="mt-1 me-2 text-sm font-semibold text-gray-500 flex items-center"><Eye className="w-4 h-4 me-1" />Chi tiết</p>
                                             </div>
                                             <div className="flex space-x-1 p-1 text-sm pb-2">
                                                 <p className={`${item.type === 'Chi tiêu' ? 'bg-red-200 text-red-600 rounded-lg' : 'bg-green-200 text-green-600 rounded-lg'} font-semibold w-24 h-7 p-1 flex justify-center items-center`}>{item.type}</p>
@@ -178,15 +183,52 @@ const Home = () => {
 
                         </div>
                     )}
+                    {detail && (
+                        <div className="fixed inset-0 flex justify-center items-center z-50 overflow-x-hidden">
+                            <div className="absolute inset-0 bg-black opacity-50"></div>
+                            <div className="relative z-10">
+                                <div className="w-[270px] h-[290px] bg-white rounded-lg">
+                                    <div className="flex justify-center">
+                                        <p className=" pt-2 text-2xl font-bold">Chi tiết</p>
+                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] pt-2 w-8 h-8" />
+                                    </div>
+                                    <div className="space-y-4 p-5 ps-10">
+                                        <div className="flex space-x-2">
+                                            <p className="font-semibold">Hạng mục: </p>
+                                            <p className={`${detail.type === 'Chi tiêu' ? 'bg-red-200 text-red-600 rounded-lg' : 'bg-green-200 text-green-600 rounded-lg'} font-semibold w-24 h-6 p-1 flex justify-center items-center`}>{detail.type}</p>
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <p className="font-semibold">Số tiền:</p>
+                                            <p className={`bg-gray-100 ${detail.type === 'Chi tiêu' ? 'text-red-600' : 'text-green-600'}  rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center`}>{detail.type === 'Chi tiêu' ? '-' : '+'} {detail.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <p className="font-semibold">Nhãn:</p>
+                                            <p className="bg-yellow-200 text-yellow-600 rounded-lg font-semibold w-20 h-6 p-1 flex justify-center items-center">{detail.category}</p>
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <p className="font-semibold">Số dư:</p>
+                                            <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">{detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                        </div>
+                                        <div className="flex space-x-2">
+                                            <p className="font-semibold">Ghi chú:</p>
+                                            <p className="font-semibold text-gray-500">{detail.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    )}
+
 
                     {addExpense && (
                         <div className='w-full max-w-[375px] mt-5 shadow-lg rounded-lg border bg-white'>
                             <p className="font-bold text-xl text-center pt-2 pb-2">THÊM CHI PHÍ</p>
                             <div className="grid grid-cols-2 gap-2 p-2">
                                 <div className="flex flex-col">
-                                    <label className="font-semibold pb-1">Loại phí</label>
-                                    <select onChange={(e) => { setType(e.target.value) }} className="border rounded-lg h-9 text-center bg-white shadow-md outline-none">
-                                        <option value=''>Chọn loại phí</option>
+                                    <label className="font-semibold pb-1">Hạng mục</label>
+                                    <select onChange={(e) => { setType(e.target.value) }} className="text-gray-400 border rounded-lg h-9 text-center bg-white shadow-md outline-none">
+                                        <option value=''>Chọn hạng mục</option>
                                         <option value='Thu nhập'>Thu nhập</option>
                                         <option value='Chi tiêu'>Chi tiêu</option>
                                     </select>
@@ -197,7 +239,7 @@ const Home = () => {
                                 </div>
                                 <div className="flex flex-col">
                                     <label className="font-semibold pb-1">Nhãn</label>
-                                    <select value={category} onChange={(e) => { setCategory(e.target.value) }} className="border rounded-lg h-9 text-center bg-white shadow-md outline-none">
+                                    <select value={category} onChange={(e) => { setCategory(e.target.value) }} className="text-gray-400 border rounded-lg h-9 text-center bg-white shadow-md outline-none">
                                         <option value=''>Chọn nhãn</option>
                                         <option value='Đi chơi'>Đi chơi</option>
                                         <option value='Ăn uống'>Ăn uống</option>
@@ -209,7 +251,7 @@ const Home = () => {
                                 </div>
                                 <div className="flex flex-col">
                                     <label className="font-semibold pb-1">Ngày</label>
-                                    <input value={date} onChange={(e) => { setDate(e.target.value) }} type="date" className="border rounded-lg h-9 w-44 text-center outline-none bg-white shadow-md" />
+                                    <input value={date} onChange={(e) => { setDate(e.target.value) }} type="date" className="text-gray-400 border rounded-lg h-9 w-44 text-center outline-none bg-white shadow-md" />
                                 </div>
 
                             </div>
