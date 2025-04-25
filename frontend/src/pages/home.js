@@ -3,6 +3,8 @@ import { ChartNoAxesCombined, Eye, History, PlusCircle, QrCode, X } from "lucide
 import { useEffect, useState } from "react";
 import API from "../configs/API";
 import { jwtDecode } from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
+import { ClipLoader } from 'react-spinners';
 
 const Home = () => {
     const [history, setHistory] = useState(true)
@@ -20,6 +22,7 @@ const Home = () => {
 
 
     const [filterDate, setFilterDate] = useState('')
+    const [filterDateEnter, setFilterDateEnter] = useState('')
     const [filterType, setFilterType] = useState('')
 
     const [type, setType] = useState('')
@@ -37,7 +40,7 @@ const Home = () => {
     const filterExpenses = expenses.filter(expense => {
         const date = new Date(expense.date); // Đảm bảo rằng date là một đối tượng Date
         return (
-            date.toLocaleDateString('vi-VN').includes(filterDate) &&
+            date.toLocaleDateString('vi-VN').includes(filterDate || filterDateEnter) &&
             expense.type.includes(filterType)
         )
     });
@@ -68,11 +71,7 @@ const Home = () => {
     }
 
     const handleAddExpenseData = async () => {
-        console.log(amount);
-        console.log(type);
-        console.log(category);
-        console.log(date);
-        console.log(description);
+        if (!validation()) return
         const results = await axios.post(`${API}/expense/addExpense`, { userId, type, category, amount, date, description })
         if (results.data.EC === 0) {
             console.log(results.data);
@@ -96,12 +95,29 @@ const Home = () => {
         setAddExpense(!addExpense)
         setHistory(false)
     }
-
-
-
+    const validation = () => {
+        if (!type) {
+            toast.warn('Hạng mục không dược bỏ trống')
+            return false
+        }
+        if (!amount) {
+            toast.warn('Bạn chưa nhập số tiền')
+            return false
+        }
+        if (!category) {
+            toast.warn('Bạn chưa chọn nhãn')
+            return false
+        }
+        if (!date) {
+            toast.warn('Bạn chưa chọn ngày')
+            return false
+        }
+        return true
+    }
 
     return (
         <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
+            <ToastContainer />
             <div className="shadow-lg w-[550px] min-h-screen mt-2 mb-2 bg-gray-100 rounded-lg overflow-y-hidden">
                 <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
                     <div className=" shadow-lg rounded-lg p-6 mb-6 w-[375px] max-w-sm">
@@ -153,6 +169,7 @@ const Home = () => {
                             <div className='w-full max-w-[375px] mt-4'>
                                 <div className='flex w-full'>
                                     <div className="ms-auto space-x-2">
+                                        <input onChange={(e) => setFilterDateEnter(e.target.value)} type="text" placeholder="Tìm theo ngày" className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold w-[167px] placeholder-black" />
                                         <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
                                             <option value=''>Loại</option>
                                             <option value='Thu nhập'>Thu nhập</option>
@@ -177,8 +194,7 @@ const Home = () => {
                                     </div>
 
                                 </div>
-
-                                {filterExpenses.map((item, index) => {
+                                {filterExpenses.length > 0 ? (filterExpenses.map((item, index) => {
                                     const date = new Date(item.date);
                                     const formattedDate = isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString('vi-VN');
                                     return (
@@ -195,10 +211,19 @@ const Home = () => {
                                             </div>
                                         </div>
                                     );
-                                })}
+                                })) : (
+                                    <div className="text-center mt-10 text-red-500 font-semibold">Dữ liệu không tồn tại</div>
+                                )}
+
                             </div>
                         ) : (
-                            <div className="text-center mt-20">Loading...</div>
+                            <div className="text-center mt-5">
+                                <ClipLoader size={50} color="#000000" />
+                                <p className="mt-2 mx-4 text-red-500 font-semibold">Server triển khai trên nền tảng render.com gói miễn phí nên cần thời gian để khơi động</p>
+                                <p className="mt-2 mx-4 font-semibold">Donate cho tôi tại đây, để có thêm chi phí nâng cấp server tốt hơn. Xin cảm ơn !</p>
+                                <img className="h-auto w-60 mx-auto mt-5" src="https://res.cloudinary.com/dteuqunrm/image/upload/v1745506633/QR_code_hpbssw.jpg" />
+
+                            </div>
                         )
                     )}
                     {detail && (
