@@ -201,6 +201,7 @@ const Home = () => {
                                         <div key={index} className="shadow-lg rounded-lg mt-2 bg-white">
                                             <div className="cursor-pointer flex justify-between">
                                                 <p className="mt-1 ms-2 text-sm font-semibold text-gray-500">{formattedDate}</p>
+                                                <p className="mt-1 ms-2 text-sm font-semibold text-gray-500 truncate w-44">{item.description}</p>
                                                 <p onClick={() => { setDetail(item) }} className="mt-1 me-2 text-sm font-semibold text-gray-500 flex items-center"><Eye className="w-4 h-4 me-1" />Chi tiết</p>
                                             </div>
                                             <div className="flex space-x-1 p-1 text-sm pb-2">
@@ -230,12 +231,11 @@ const Home = () => {
                         <div className="fixed inset-0 flex justify-center items-center z-50 overflow-x-hidden">
                             <div className="absolute inset-0 bg-black opacity-50"></div>
                             <div className="relative z-10">
-                                <div className="w-[270px] h-[290px] bg-white rounded-lg">
+                                <div className="w-[270px] h-auto bg-white rounded-lg pb-4 pt-4">
                                     <div className="flex justify-center">
-                                        <p className=" pt-2 text-2xl font-bold">Chi tiết</p>
-                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
+                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] -mt-3 pt-1 w-8 h-8 cursor-pointer" />
                                     </div>
-                                    <div className="space-y-4 p-5 ps-10">
+                                    <div className="space-y-4 p-5 ps-10 pb-3">
                                         <div className="flex space-x-2">
                                             <p className="font-semibold">Hạng mục: </p>
                                             <p className={`${detail.type === 'Chi tiêu' ? 'bg-red-200 text-red-600 rounded-lg' : 'bg-green-200 text-green-600 rounded-lg'} font-semibold w-24 h-6 p-1 flex justify-center items-center`}>{detail.type}</p>
@@ -252,10 +252,11 @@ const Home = () => {
                                             <p className="font-semibold">Số dư:</p>
                                             <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">{detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                                         </div>
-                                        <div className="flex space-x-2">
+                                        <div className="flex flex-wrap space-x-2">
                                             <p className="font-semibold">Ghi chú:</p>
-                                            <p className="font-semibold text-gray-500">{detail.description}</p>
+                                            <p className="font-semibold text-gray-500 break-words w-32">{detail.description}</p>
                                         </div>
+
                                     </div>
                                 </div>
 
