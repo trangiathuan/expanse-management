@@ -6,7 +6,7 @@ export type ExpenseDocument = Expense & Document;
 @Schema()
 export class Expense {
     @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-    userId: string;
+    userId: Types.ObjectId;
 
     @Prop({ type: String, enum: ['Đi chơi', 'Ăn uống', 'Giải trí', 'Mua sắm', 'Nhận tiền', 'Khác'], required: true })
     category: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Date, Model, ObjectId } from 'mongoose';
+import { Date, Model, ObjectId, Types } from 'mongoose';
 import { Expense, ExpenseDocument } from './expense.shema';
 import { TotalMoney, TotalMoneyDocument } from './total-money.shema';
 
@@ -11,7 +11,7 @@ export class ExpenseService {
         @InjectModel(TotalMoney.name) private totalMoneyModel: Model<TotalMoneyDocument>
     ) { }
 
-    async addTotalMoney(userId: ObjectId, total: number): Promise<any> {
+    async addTotalMoney(userId: Types.ObjectId, total: number): Promise<any> {
         const user = await this.totalMoneyModel.findOne({ userId })
         if (user) {
             const update = await this.totalMoneyModel.updateOne(
@@ -30,7 +30,7 @@ export class ExpenseService {
         }
     }
 
-    async addExpense(userId: ObjectId, category: string, type: string, amount: number, description: string, date: string) {
+    async addExpense(userId: Types.ObjectId, category: string, type: string, amount: number, description: string, date: string) {
         try {
             const totalMoney = await this.totalMoneyModel.findOne({ userId });
 
@@ -68,7 +68,7 @@ export class ExpenseService {
         }
     }
 
-    async getExpense(userId: ObjectId) {
+    async getExpense(userId: Types.ObjectId) {
         const result = await this.expenseModel.find({ userId }).sort({ date: -1, createdAt: -1 })
         if (result && result.length > 0) {
             return { EC: 0, message: 'Lấy dữ liệu thu chi thành công', response: result }
@@ -77,7 +77,7 @@ export class ExpenseService {
         }
     }
 
-    async getTotalMoney(userId: ObjectId) {
+    async getTotalMoney(userId: Types.ObjectId) {
         const result = await this.totalMoneyModel.find({ userId })
         if (result && result.length > 0) {
             return { EC: 0, message: 'Lấy dữ liệu tổng số dư thành công', response: result }

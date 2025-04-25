@@ -6,7 +6,7 @@ export type TotalMoneyDocument = TotalMoney & Document;
 @Schema()
 export class TotalMoney {
     @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-    userId: string;
+    userId: Types.ObjectId;
 
     @Prop({ required: true })
     total: number;
