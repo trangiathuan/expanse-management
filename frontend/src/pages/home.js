@@ -169,7 +169,7 @@ const Home = () => {
                             <div className='w-full max-w-[375px] mt-4'>
                                 <div className='flex w-full'>
                                     <div className="ms-auto space-x-2">
-                                        <input onChange={(e) => setFilterDateEnter(e.target.value)} type="text" placeholder="Tìm theo ngày" className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold w-[167px] placeholder-black" />
+                                        <input onChange={(e) => setFilterDateEnter(e.target.value)} type="text" placeholder="Tìm theo ngày" className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold w-[164px] placeholder-black" />
                                         <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
                                             <option value=''>Loại</option>
                                             <option value='Thu nhập'>Thu nhập</option>
