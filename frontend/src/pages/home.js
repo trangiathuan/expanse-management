@@ -128,8 +128,8 @@ const Home = () => {
                             <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 -mt-0 ms-0 cursor-pointer" />
                         </div>
                         <div className="flex">
-                            <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm">✷✷✷✷✷✷</span> : 0}</p>
-                            {hiddenMoney ? <Eye onClick={() => setHiddenMoney(false)} className="w-4 h-4 -mt-4 ms-auto me-6" /> : <EyeOff onClick={() => setHiddenMoney(true)} className="w-4 h-4 -mt-4 ms-auto me-6" />}
+                            <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]  transition duration-200"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm transition duration-200">✷✷✷✷✷✷</span> : 0}</p>
+                            {hiddenMoney ? <Eye onClick={() => setHiddenMoney(false)} className="w-4 h-4 -mt-4 ms-auto me-8 transition duration-200" /> : <EyeOff onClick={() => setHiddenMoney(true)} className="w-4 h-4 -mt-4 ms-auto me-8 transition duration-200" />}
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-4 w-full max-w-[375px]">
