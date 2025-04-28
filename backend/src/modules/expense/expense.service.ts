@@ -97,7 +97,7 @@ export class ExpenseService {
             } catch (error) {
                 console.error('Error getting total money:', error);
             }
-        }, 60 * 1000);
+        }, 10 * 60 * 1000);
     }
 
     // (Optional) Clear interval nếu app shutdown
