@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChartNoAxesCombined, Eye, History, PlusCircle, QrCode, X } from "lucide-react";
+import { ChartNoAxesCombined, Eye, EyeOff, History, PlusCircle, QrCode, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import API from "../configs/API";
 import { jwtDecode } from "jwt-decode";
@@ -10,6 +10,7 @@ const Home = () => {
     const [history, setHistory] = useState(true)
     const [addExpense, setAddExpense] = useState(false)
     const [qr, setQr] = useState(false)
+    const [hiddenMoney, setHiddenMoney] = useState(false)
 
 
 
@@ -126,8 +127,9 @@ const Home = () => {
                             <p className="text-2xl font-bold">Trần Gia Thuận</p>
                             <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 -mt-0 ms-0 cursor-pointer" />
                         </div>
-                        <div>
-                            <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]"><span className="text-black">Số dư: </span>{totalMoney.total ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 0}</p>
+                        <div className="flex">
+                            <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm">✷✷✷✷✷✷</span> : 0}</p>
+                            {hiddenMoney ? <Eye onClick={() => setHiddenMoney(false)} className="w-4 h-4 -mt-4 ms-auto me-6" /> : <EyeOff onClick={() => setHiddenMoney(true)} className="w-4 h-4 -mt-4 ms-auto me-6" />}
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-4 w-full max-w-[375px]">
