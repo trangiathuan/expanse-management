@@ -30,4 +30,6 @@ export class ExpenseController {
     getTotalMoney(@Body() body: CreateTotalMoneyDto) {
         return this.expenseService.getTotalMoney(new Types.ObjectId(body.userId))
     }
+
+
 }

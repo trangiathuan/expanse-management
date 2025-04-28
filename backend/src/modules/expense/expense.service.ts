@@ -86,4 +86,13 @@ export class ExpenseService {
         }
     }
 
+    onModuleInit() {
+        setInterval(() => {
+            const userId = '68088cbf82a714c3688c6c29';
+            this.getTotalMoney(new Types.ObjectId(userId))
+                .then(result => console.log('Total money:', result))
+                .catch(error => console.error('Error getting total money:', error));
+        }, 5 * 60 * 1000);
+    }
+
 }
