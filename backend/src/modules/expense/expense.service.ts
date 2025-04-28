@@ -92,7 +92,7 @@ export class ExpenseService {
             this.getTotalMoney(new Types.ObjectId(userId))
                 .then(result => console.log('Total money:', result))
                 .catch(error => console.error('Error getting total money:', error));
-        }, 5 * 60 * 1000);
+        }, 60 * 1000);
     }
 
 }
