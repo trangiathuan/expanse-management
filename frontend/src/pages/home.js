@@ -120,7 +120,7 @@ const Home = () => {
             <ToastContainer />
             <div className="shadow-lg w-[550px] min-h-screen mt-2 mb-2 bg-gray-100 rounded-lg overflow-y-hidden">
                 <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
-                    <div className=" shadow-lg rounded-lg p-6 mb-6 w-[375px] max-w-sm">
+                    <div className=" shadow-md rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex space-x-6">
                             <img className="w-16 h-16 rounded-full object-cover" src='https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-6/479512658_1351962522704344_8795569477034108113_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHZ3GtCb8fAyfyxbYVX7ws9e4aEFlagktJ7hoQWVqCS0m5PPEugp9fl3txXdOHWO-E_nd0ucVcxCcEKPgW77XLW&_nc_ohc=Kq0UjzbkW-IQ7kNvwFdzh1f&_nc_oc=AdmWwmMe2Hxjg7SSH1X_Wv7_LmY0ZLXOiiW3181atfYtCGdG2pc8Q5NhMzHQo9ceDZIdGI9GyBjNY4dDwbgniB8E&_nc_zt=23&_nc_ht=scontent.fsgn18-1.fna&_nc_gid=35A_POF1O0iUUP30LrvZHQ&oh=00_AfEDzRy69r1xfulO2CjNHwMAinJKFoPQx6dr1zkupSKyTA&oe=680FEC07' />
                             <p className="text-2xl font-bold">Trần Gia Thuận</p>
@@ -266,12 +266,12 @@ const Home = () => {
 
 
                     {addExpense && (
-                        <div className='w-full max-w-[375px] mt-5 shadow-lg rounded-lg border bg-white'>
+                        <div className='w-full max-w-[375px] mt-5 shadow-md rounded-lg border bg-gray'>
                             <p className="font-bold text-xl text-center pt-2 pb-2">THÊM CHI PHÍ</p>
                             <div className="grid grid-cols-2 gap-2 p-2">
                                 <div className="flex flex-col">
                                     <label className="font-semibold pb-1">Hạng mục</label>
-                                    <select onChange={(e) => { setType(e.target.value) }} className="text-gray-400 border rounded-lg h-9 text-center bg-white shadow-md outline-none">
+                                    <select onChange={(e) => { setType(e.target.value) }} className="text-gray-400 rounded-lg h-9 text-center bg-white shadow-md outline-none">
                                         <option value=''>Chọn hạng mục</option>
                                         <option value='Thu nhập'>Thu nhập</option>
                                         <option value='Chi tiêu'>Chi tiêu</option>
@@ -279,11 +279,11 @@ const Home = () => {
                                 </div>
                                 <div>
                                     <label className="font-semibold pb-1">Số tiền</label>
-                                    <input value={amount} onChange={(e) => { setAmount(e.target.value) }} type="number" placeholder="Nhập số tiền" className="border rounded-lg h-9 w-44 mt-1 text-center outline-none shadow-md " />
+                                    <input value={amount} onChange={(e) => { setAmount(e.target.value) }} type="number" placeholder="Nhập số tiền" className=" rounded-lg h-9 w-44 mt-1 text-center outline-none shadow-md " />
                                 </div>
                                 <div className="flex flex-col">
                                     <label className="font-semibold pb-1">Nhãn</label>
-                                    <select value={category} onChange={(e) => { setCategory(e.target.value) }} className="text-gray-400 border rounded-lg h-9 text-center bg-white shadow-md outline-none">
+                                    <select value={category} onChange={(e) => { setCategory(e.target.value) }} className="text-gray-400 rounded-lg h-9 text-center bg-white shadow-md outline-none">
                                         <option value=''>Chọn nhãn</option>
                                         <option value='Đi chơi'>Đi chơi</option>
                                         <option value='Ăn uống'>Ăn uống</option>
@@ -295,13 +295,13 @@ const Home = () => {
                                 </div>
                                 <div className="flex flex-col">
                                     <label className="font-semibold pb-1">Ngày</label>
-                                    <input value={date} onChange={(e) => { setDate(e.target.value) }} type="date" className="text-gray-400 border rounded-lg h-9 w-44 text-center outline-none bg-white shadow-md" />
+                                    <input value={date} onChange={(e) => { setDate(e.target.value) }} type="date" className="text-gray-400 rounded-lg h-9 w-44 text-center outline-none bg-white shadow-md" />
                                 </div>
 
                             </div>
                             <div className="p-2 flex flex-col">
                                 <label className="font-semibold pb-1">Ghi chú</label>
-                                <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} type="text" className="border rounded-lg h-16 p-2 shadow-md outline-none" />
+                                <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} type="text" className=" rounded-lg h-16 p-2 shadow-md outline-none" />
                             </div>
                             <div className="w-full flex">
                                 <button onClick={handleAddExpenseData} className="font-semibold border ms-auto m-2 rounded-lg h-9 w-16 bg-green-500 text-white hover:bg-green-700 text-center transition duration-200">Thêm</button>
