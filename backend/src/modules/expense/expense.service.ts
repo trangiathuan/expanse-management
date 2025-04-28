@@ -86,13 +86,26 @@ export class ExpenseService {
         }
     }
 
-    onModuleInit() {
-        setInterval(() => {
-            const userId = '68088cbf82a714c3688c6c29';
-            this.getTotalMoney(new Types.ObjectId(userId))
-                .then(result => console.log('Total money:', result))
-                .catch(error => console.error('Error getting total money:', error));
+    private intervalId: NodeJS.Timeout;
+
+    async onModuleInit() {
+        this.intervalId = setInterval(async () => {
+            try {
+                const userId = new Types.ObjectId('68088cbf82a714c3688c6c29');
+                const result = await this.getTotalMoney(userId);
+                console.log('Total money:', result);
+            } catch (error) {
+                console.error('Error getting total money:', error);
+            }
         }, 60 * 1000);
     }
+
+    // (Optional) Clear interval nếu app shutdown
+    onModuleDestroy() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
+    }
+
 
 }
