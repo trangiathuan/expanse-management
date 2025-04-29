@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { ExpenseService } from "./expense.service";
 import { CreateTotalMoneyDto } from "./DTO/total-money.dto";
 import { CreateExpenseDto } from "./DTO/expense.dto";
@@ -29,6 +29,11 @@ export class ExpenseController {
     @Post('getTotalMoney')
     getTotalMoney(@Body() body: CreateTotalMoneyDto) {
         return this.expenseService.getTotalMoney(new Types.ObjectId(body.userId))
+    }
+
+    @Get('ping')
+    ping() {
+        return 'pong';
     }
 
 
