@@ -210,7 +210,7 @@ const Home = () => {
                                                 <p className={`${item.type === 'Chi tiêu' ? 'bg-red-200 text-red-600 rounded-lg' : 'bg-green-200 text-green-600 rounded-lg'} font-semibold w-24 h-7 p-1 flex justify-center items-center`}>{item.type}</p>
                                                 <p className={`bg-gray-100 ${item.type === 'Chi tiêu' ? 'text-red-600' : 'text-green-600'}  rounded-lg font-semibold w-28 h-7 p-1 flex justify-center`}>{item.type === 'Chi tiêu' ? '-' : '+'} {item.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                                                 <p className="bg-yellow-200 text-yellow-600 rounded-lg font-semibold w-20 h-7 p-1 flex justify-center">{item.category}</p>
-                                                <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-7 p-1 flex justify-center">{item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                                <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-7 p-1 flex justify-center">{hiddenMoney ? item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '✷✷✷✷✷✷'}</p>
                                             </div>
                                         </div>
                                     );
