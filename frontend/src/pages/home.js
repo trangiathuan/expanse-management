@@ -171,13 +171,13 @@ const Home = () => {
                             <div className='w-full max-w-[375px] mt-4'>
                                 <div className='flex w-full'>
                                     <div className="ms-auto space-x-2">
-                                        <input onChange={(e) => setFilterDateEnter(e.target.value)} type="text" placeholder="Tìm theo ngày" className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold w-[164px] placeholder-black" />
-                                        <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
-                                            <option value=''>Loại</option>
+                                        <input onChange={(e) => setFilterDateEnter(e.target.value)} type="text" placeholder="Tìm theo ngày" className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold w-[157px] placeholder-black" />
+                                        <select onChange={(e) => setFilterType(e.target.value)} className="bg-white rounded-lg shadow-lg p-[5px] outline-none text-center font-semibold ">
+                                            <option value=''>Hạng mục</option>
                                             <option value='Thu nhập'>Thu nhập</option>
                                             <option value='Chi tiêu'>Chi tiêu</option>
                                         </select>
-                                        <select onChange={(e) => setFilterDate(e.target.value)} className="bg-white rounded-lg shadow-lg p-1 outline-none text-center font-semibold ">
+                                        <select onChange={(e) => setFilterDate(e.target.value)} className="bg-white rounded-lg shadow-lg p-[5px] outline-none text-center font-semibold ">
                                             <option value=''>Tất cả</option>
                                             <option value={new Date().toLocaleDateString('vi-VN')}>Hôm nay</option>
                                             <option value={`/1/${new Date().getFullYear()}`}>Tháng 1</option>
@@ -252,7 +252,7 @@ const Home = () => {
                                         </div>
                                         <div className="flex space-x-2">
                                             <p className="font-semibold">Số dư:</p>
-                                            <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">{detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                            <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">{hiddenMoney ? detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '✷✷✷✷✷✷'}</p>
                                         </div>
                                         <div className="flex flex-wrap space-x-2">
                                             <p className="font-semibold">Ghi chú:</p>
