@@ -123,9 +123,9 @@ const Home = () => {
                 <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
                     <div className=" shadow-md rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex space-x-6">
-                            <img className="w-16 h-16 rounded-full object-cover" src='https://scontent.fsgn18-1.fna.fbcdn.net/v/t39.30808-6/479512658_1351962522704344_8795569477034108113_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHZ3GtCb8fAyfyxbYVX7ws9e4aEFlagktJ7hoQWVqCS0m5PPEugp9fl3txXdOHWO-E_nd0ucVcxCcEKPgW77XLW&_nc_ohc=Kq0UjzbkW-IQ7kNvwFdzh1f&_nc_oc=AdmWwmMe2Hxjg7SSH1X_Wv7_LmY0ZLXOiiW3181atfYtCGdG2pc8Q5NhMzHQo9ceDZIdGI9GyBjNY4dDwbgniB8E&_nc_zt=23&_nc_ht=scontent.fsgn18-1.fna&_nc_gid=35A_POF1O0iUUP30LrvZHQ&oh=00_AfEDzRy69r1xfulO2CjNHwMAinJKFoPQx6dr1zkupSKyTA&oe=680FEC07' />
+                            <img className="w-16 h-16 rounded-full object-cover" src='https://res.cloudinary.com/dteuqunrm/image/upload/v1746828829/avtt_htzo9r.png' />
                             <p className="text-2xl font-bold">Trần Gia Thuận</p>
-                            <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 -mt-0 ms-0 cursor-pointer" />
+                            <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 mt-[2px] ms-0 cursor-pointer" />
                         </div>
                         <div className="flex">
                             <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]  transition duration-200"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm transition duration-200">✷✷✷✷✷✷</span> : 0}</p>
@@ -230,42 +230,55 @@ const Home = () => {
                         )
                     )}
                     {detail && (
-                        <div className="fixed inset-0 flex justify-center items-center z-50 overflow-x-hidden">
-                            <div className="absolute inset-0 bg-black opacity-50"></div>
-                            <div className="relative z-10">
-                                <div className="w-[270px] h-auto bg-white rounded-lg pb-4 pt-4">
-                                    <div className="flex justify-center">
-                                        <X onClick={() => { setDetail() }} className="fixed ms-[230px] -mt-3 pt-1 w-8 h-8 cursor-pointer" />
-                                    </div>
-                                    <div className="space-y-4 p-5 ps-10 pb-3">
-                                        <div className="flex space-x-2">
-                                            <p className="font-semibold">Hạng mục: </p>
-                                            <p className={`${detail.type === 'Chi tiêu' ? 'bg-red-200 text-red-600 rounded-lg' : 'bg-green-200 text-green-600 rounded-lg'} font-semibold w-24 h-6 p-1 flex justify-center items-center`}>{detail.type}</p>
+                        (() => {
+                            const date = new Date(detail.date);
+                            const formattedDate = isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString('vi-VN');
+                            return (
+                                <div className="fixed inset-0 flex justify-center items-center z-50 overflow-x-hidden">
+                                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                                    <div className="relative z-10">
+                                        <div className="w-[270px] h-auto bg-white rounded-lg pb-4 pt-4">
+                                            <div className="flex justify-center">
+                                                <X onClick={() => setDetail()} className="fixed ms-[230px] -mt-3 pt-1 w-8 h-8 cursor-pointer" />
+                                            </div>
+                                            <div className="space-y-4 p-5 ps-10 pb-3">
+                                                <div className="flex space-x-2">
+                                                    <p className="font-semibold">Hạng mục: </p>
+                                                    <p className={`${detail.type === 'Chi tiêu' ? 'bg-red-200 text-red-600' : 'bg-green-200 text-green-600'} rounded-lg font-semibold w-24 h-6 p-1 flex justify-center items-center`}>
+                                                        {detail.type}
+                                                    </p>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <p className="font-semibold">Số tiền:</p>
+                                                    <p className={`bg-gray-100 ${detail.type === 'Chi tiêu' ? 'text-red-600' : 'text-green-600'} rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center`}>
+                                                        {detail.type === 'Chi tiêu' ? '-' : '+'} {detail.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    </p>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <p className="font-semibold">Nhãn:</p>
+                                                    <p className="bg-yellow-200 text-yellow-600 rounded-lg font-semibold w-20 h-6 p-1 flex justify-center items-center">{detail.category}</p>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <p className="font-semibold">Số dư:</p>
+                                                    <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">
+                                                        {hiddenMoney ? detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '✷✷✷✷✷✷'}
+                                                    </p>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <p className="font-semibold">Ngày:</p>
+                                                    <p className="text-gray-500 font-semibold w-16 h-6 p-1 flex justify-center items-center">{formattedDate}</p>
+                                                </div>
+                                                <div className="flex flex-wrap space-x-2">
+                                                    <p className="font-semibold">Ghi chú:</p>
+                                                    <p className="font-semibold text-gray-500 break-words w-32">{detail.description}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="flex space-x-2">
-                                            <p className="font-semibold">Số tiền:</p>
-                                            <p className={`bg-gray-100 ${detail.type === 'Chi tiêu' ? 'text-red-600' : 'text-green-600'}  rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center`}>{detail.type === 'Chi tiêu' ? '-' : '+'} {detail.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                                        </div>
-                                        <div className="flex space-x-2">
-                                            <p className="font-semibold">Nhãn:</p>
-                                            <p className="bg-yellow-200 text-yellow-600 rounded-lg font-semibold w-20 h-6 p-1 flex justify-center items-center">{detail.category}</p>
-                                        </div>
-                                        <div className="flex space-x-2">
-                                            <p className="font-semibold">Số dư:</p>
-                                            <p className="bg-blue-200 text-blue-600 rounded-lg font-semibold w-28 h-6 p-1 flex justify-center items-center">{hiddenMoney ? detail.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '✷✷✷✷✷✷'}</p>
-                                        </div>
-                                        <div className="flex flex-wrap space-x-2">
-                                            <p className="font-semibold">Ghi chú:</p>
-                                            <p className="font-semibold text-gray-500 break-words w-32">{detail.description}</p>
-                                        </div>
-
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
+                            );
+                        })()
                     )}
-
 
                     {addExpense && (
                         <div className='w-full max-w-[375px] mt-5 shadow-md rounded-lg border bg-gray'>
