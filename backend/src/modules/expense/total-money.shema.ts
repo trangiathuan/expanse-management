@@ -8,7 +8,7 @@ export class TotalMoney {
     @Prop({ type: Types.ObjectId, ref: 'User', required: true })
     userId: Types.ObjectId;
 
-    @Prop({ required: true })
+    @Prop({ required: true, default: 0 })
     total: number;
 }
 export const TotalMoneySchema = SchemaFactory.createForClass(TotalMoney);

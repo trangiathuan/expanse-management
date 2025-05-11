@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import API from "../configs/API";
@@ -11,7 +11,15 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-
+    useEffect(() => {
+        checkLogin()
+    }, [])
+    const checkLogin = () => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            navigate('/home')
+        }
+    }
     const handleLogin = async (e) => {
         e.preventDefault(); // Chặn reload trang
         setLoading(true);

@@ -5,12 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import API from "../configs/API";
 import { ClipLoader } from "react-spinners";
 import { Flag } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const login = async (e) => {
         e.preventDefault(); // chặn reload trang
@@ -22,8 +24,10 @@ const Register = () => {
             password
         });
         if (res.data.EC == 0) {
+            setLoading(false);
             toast.success(res.data.message);
             console.log("Register success:", res.data);
+            navigate('/login')
         } else {
             setLoading(false);
             setTimeout(() => {

@@ -12,5 +12,6 @@ import { TotalMoney, TotalMoneySchema } from './total-money.shema';
     ],
     providers: [ExpenseService],
     controllers: [ExpenseController],
+    exports: [ExpenseService]
 })
 export class ExpenserModule { }

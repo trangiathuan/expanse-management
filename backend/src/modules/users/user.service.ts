@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../users/user.shema';
+import { ExpenseService } from '../expense/expense.service';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(User.name) private userModel: Model<UserDocument>,
         private jwtService: JwtService,
+        private readonly expenseService: ExpenseService
     ) { }
 
     async register(fullName: string, username: string, password: string): Promise<any> {
@@ -19,6 +21,7 @@ export class UserService {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new this.userModel({ fullName, username, password: hashedPassword });
         await user.save();
+        await this.expenseService.addTotalMoney(new Types.ObjectId(user._id as string), 0);
         return { EC: 0, message: 'Đăng ký thành công', response: user };
     }
 

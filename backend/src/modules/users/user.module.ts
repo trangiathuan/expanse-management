@@ -7,12 +7,14 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { ExpenserModule } from '../expense/expense.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
         PassportModule,
+        ExpenserModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => ({
