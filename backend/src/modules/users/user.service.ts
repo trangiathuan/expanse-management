@@ -12,12 +12,12 @@ export class UserService {
         private jwtService: JwtService,
     ) { }
 
-    async register(username: string, password: string): Promise<any> {
+    async register(fullName: string, username: string, password: string): Promise<any> {
         const existingUser = await this.userModel.findOne({ username });
         if (existingUser) return { EC: -1, message: 'Tài khoản đã tồn tại' };
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new this.userModel({ username, password: hashedPassword });
+        const user = new this.userModel({ fullName, username, password: hashedPassword });
         await user.save();
         return { EC: 0, message: 'Đăng ký thành công', response: user };
     }
@@ -31,7 +31,7 @@ export class UserService {
         if (!await bcrypt.compare(password, user.password)) {
             return { EC: -1, message: 'Mật khẩu không chính xác' };
         }
-        const payload = { userId: user._id, username: user.username, role: user.role };
+        const payload = { fullName: user.fullName, userId: user._id, username: user.username, role: user.role };
         return {
             EC: 0,
             message: 'Đăng nhập thành công',

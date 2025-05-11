@@ -12,7 +12,7 @@ export class UserController {
 
     @Post('register')
     register(@Body() body: RegisterDto) {
-        return this.userService.register(body.username, body.password);
+        return this.userService.register(body.fullName, body.username, body.password);
     }
 
     @Post('login')
