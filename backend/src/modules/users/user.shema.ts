@@ -16,6 +16,9 @@ export class User {
 
     @Prop({ default: 'user' })
     role: string;
+
+    @Prop({ default: 'https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg' })
+    avt: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
