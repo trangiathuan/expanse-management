@@ -41,4 +41,20 @@ export class UserService {
             token: this.jwtService.sign(payload),
         };
     }
+
+    async update(userId: string, updates: { password?: string }): Promise<any> {
+        const user = await this.userModel.findById(userId);
+        if (!user) {
+            return { EC: -1, message: 'Người dùng không tồn tại' };
+        }
+
+        if (updates.password) {
+            user.password = await bcrypt.hash(updates.password, 10);
+        }
+
+        await user.save();
+
+        return { EC: 0, message: 'Cập nhật thông tin thành công', response: user };
+    }
+
 }

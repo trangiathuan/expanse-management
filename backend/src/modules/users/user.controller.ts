@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -18,6 +18,14 @@ export class UserController {
     @Post('login')
     login(@Body() body: LoginDto) {
         return this.userService.login(body.username, body.password);
+    }
+
+    @Put('update/:id')
+    async updateUser(
+        @Param('id') id: string,
+        @Body() body: { password?: string }
+    ) {
+        return await this.userService.update(id, body);
     }
 
     @UseGuards(JwtAuthGuard)

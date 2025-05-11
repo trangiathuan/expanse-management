@@ -1,17 +1,20 @@
 import axios from "axios";
-import { ChartNoAxesCombined, Eye, EyeOff, History, PlusCircle, QrCode, X } from "lucide-react";
+import { ChartNoAxesCombined, Eye, EyeOff, History, PlusCircle, QrCode, Settings, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import API from "../configs/API";
 import { jwtDecode } from "jwt-decode";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const [history, setHistory] = useState(true)
     const [addExpense, setAddExpense] = useState(false)
     const [qr, setQr] = useState(false)
+    const [setting, setSetting] = useState(false)
     const [hiddenMoney, setHiddenMoney] = useState(false)
 
+    const navigate = useNavigate()
 
 
     const [expenses, setExpense] = useState([])
@@ -19,8 +22,6 @@ const Home = () => {
     const [detail, setDetail] = useState(null)
 
     console.log(detail);
-
-
 
     const [filterDate, setFilterDate] = useState('')
     const [filterDateEnter, setFilterDateEnter] = useState('')
@@ -109,6 +110,12 @@ const Home = () => {
         return true
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate('/')
+
+    }
+
     return (
         <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
             <ToastContainer />
@@ -118,11 +125,14 @@ const Home = () => {
                         <div className="flex">
                             <img className="w-16 h-16 rounded-full object-cover" src={avt} />
                             <p className="ms-5 w-44 text-xl font-bold truncate">{fullName}</p>
-                            <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 mt-[2px] ms-5 cursor-pointer" />
                         </div>
                         <div className="flex">
                             <p className="text-xl font-bold text-green-600 -mt-6 ms-[86px]  transition duration-200"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm transition duration-200">✷✷✷✷✷✷</span> : 0}</p>
-                            {hiddenMoney ? <Eye onClick={() => setHiddenMoney(false)} className="w-4 h-4 -mt-4 ms-auto me-8 transition duration-200" /> : <EyeOff onClick={() => setHiddenMoney(true)} className="w-4 h-4 -mt-4 ms-auto me-8 transition duration-200" />}
+                            {hiddenMoney ? <Eye onClick={() => setHiddenMoney(false)} className="w-5 h-5 -mt-4 ms-auto me-8 transition duration-200" /> : <EyeOff onClick={() => setHiddenMoney(true)} className="w-5 h-5 -mt-4 ms-auto me-8 transition duration-200" />}
+                        </div>
+                        <div className="flex">
+                            <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 mt-4 ms-[86px] me-5 cursor-pointer" />
+                            <Settings onClick={() => { setSetting(true) }} className="w-8 h-8 mt-4 cursor-pointer" />
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-4 w-full max-w-[375px]">
@@ -151,6 +161,25 @@ const Home = () => {
                                     </div>
                                     <div>
                                         <img className="rounded-lg" src='https://res.cloudinary.com/dteuqunrm/image/upload/v1745506633/QR_code_hpbssw.jpg' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {setting && (
+                        <div className="fixed inset-0 flex justify-center pt-48 z-50 overflow-x-hidden">
+                            <div className="absolute inset-0 bg-black opacity-50"></div>
+                            <div className="relative z-10">
+                                <div className="flex w-[270px] h-auto bg-white rounded-lg">
+                                    <div className="flex">
+                                        <X onClick={() => { setSetting(false) }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
+                                    </div>
+                                    <div className="p-8 text-xl font-semibold space-y-1 pt-12 pb-12">
+                                        <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 1</p>
+                                        <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 2</p>
+                                        <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 3</p>
+                                        <p onClick={handleLogout} className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">Đăng xuất</p>
                                     </div>
                                 </div>
                             </div>
