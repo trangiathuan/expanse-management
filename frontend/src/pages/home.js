@@ -124,7 +124,7 @@ const Home = () => {
                     <div className=" shadow-md rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex">
                             <img className="w-16 h-16 rounded-full object-cover" src={avt} />
-                            <p className="ms-5 w-44 text-2xl font-bold truncate">{fullName}</p>
+                            <p className="ms-5 w-44 text-xl font-bold truncate">{fullName}</p>
                         </div>
                         <div className="flex">
                             <p className="text-xl font-bold text-green-600 -mt-8 ms-[86px]  transition duration-200"><span className="text-black">Số dư: </span>{totalMoney.total ? hiddenMoney ? totalMoney.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : <span className="text-sm transition duration-200">✷✷✷✷✷✷</span> : 0}</p>
