@@ -27,7 +27,7 @@ const Register = () => {
             setLoading(false);
             toast.success(res.data.message);
             console.log("Register success:", res.data);
-            navigate('/login')
+            navigate('/')
         } else {
             setLoading(false);
             setTimeout(() => {

@@ -116,8 +116,8 @@ const Home = () => {
                 <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
                     <div className=" shadow-md rounded-lg p-6 mb-6 w-[375px] max-w-sm">
                         <div className="flex">
-                            <img className="w-16 h-16 rounded-full object-cover" src='https://res.cloudinary.com/dteuqunrm/image/upload/v1746828829/avtt_htzo9r.png' />
-                            <p className="ms-5 w-44 text-2xl font-bold">{fullName}</p>
+                            <img className="w-16 h-16 rounded-full object-cover" src={avt} />
+                            <p className="ms-5 w-44 text-xl font-bold truncate">{fullName}</p>
                             <QrCode onClick={() => { setQr(true) }} className="w-8 h-8 mt-[2px] ms-5 cursor-pointer" />
                         </div>
                         <div className="flex">

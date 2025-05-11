@@ -34,7 +34,7 @@ export class UserService {
         if (!await bcrypt.compare(password, user.password)) {
             return { EC: -1, message: 'Mật khẩu không chính xác' };
         }
-        const payload = { fullName: user.fullName, userId: user._id, username: user.username, role: user.role };
+        const payload = { fullName: user.fullName, userId: user._id, username: user.username, role: user.role, avt: user.avt };
         return {
             EC: 0,
             message: 'Đăng nhập thành công',
