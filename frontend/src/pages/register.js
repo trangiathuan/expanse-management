@@ -3,6 +3,8 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import API from "../configs/API";
+import { ClipLoader } from "react-spinners";
+import { Flag } from "lucide-react";
 
 const Register = () => {
     const [fullName, setFullName] = useState("");
@@ -13,23 +15,31 @@ const Register = () => {
     const login = async (e) => {
         e.preventDefault(); // chặn reload trang
         setLoading(true);
-        try {
-            const res = await axios.post(`${API}/user/register`, {
-                fullName,
-                username,
-                password
-            });
-            if (res.data.EC == 0) {
-                toast.success("Đăng ký thành công!");
-                console.log("Register success:", res.data);
-            }
-        } catch (err) {
-            console.error(err);
-            toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
-        } finally {
+
+        const res = await axios.post(`${API}/user/register`, {
+            fullName,
+            username,
+            password
+        });
+        if (res.data.EC == 0) {
+            toast.success(res.data.message);
+            console.log("Register success:", res.data);
+        } else {
             setLoading(false);
+            setTimeout(() => {
+                toast.warn(res.data.message);
+            }, 200);
         }
-    };
+    }
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center w-full mt-80">
+                <ClipLoader size={50} color="#000000" />
+            </div>
+
+        )
+    }
 
     return (
         <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
@@ -37,7 +47,7 @@ const Register = () => {
             <div className="shadow-lg w-[550px] min-h-screen mt-2 mb-2 bg-gray-100 rounded-lg overflow-y-hidden">
                 <div className="flex flex-col items-center mt-4 mb-4 min-h-screen bg-gray-100">
                     <div className="w-full max-w-sm p-8 bg-white rounded-xl shadow-md mt-40">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Đăng nhập</h2>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Đăng ký tài khoản</h2>
                         <form onSubmit={login} className="space-y-5 w-full">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fullname">Họ và tên</label>
@@ -80,7 +90,7 @@ const Register = () => {
                                 disabled={loading}
                                 className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
                             >
-                                {loading ? "Đang xử lý..." : "Đăng nhập"}
+                                Đăng ký
                             </button>
                         </form>
                     </div>

@@ -26,7 +26,7 @@ export class UserService {
         const user = await this.userModel.findOne({ username });
 
         if (!user) {
-            return { EC: -1, message: 'Tài khoản không tồn tại' };
+            return { EC: -1, message: 'Tên đăng nhập không chính xác' };
         }
         if (!await bcrypt.compare(password, user.password)) {
             return { EC: -1, message: 'Mật khẩu không chính xác' };

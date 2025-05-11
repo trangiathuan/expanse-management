@@ -225,7 +225,6 @@ const Home = () => {
                                 <p className="mt-2 mx-4 text-red-500 font-semibold">Server triển khai trên nền tảng render.com gói miễn phí nên cần thời gian để khơi động</p>
                                 <p className="mt-2 mx-4 font-semibold">Donate cho tôi tại đây, để có thêm chi phí nâng cấp server tốt hơn. Xin cảm ơn !</p>
                                 <img className="h-auto w-60 mx-auto mt-5" src="https://res.cloudinary.com/dteuqunrm/image/upload/v1745506633/QR_code_hpbssw.jpg" />
-
                             </div>
                         )
                     )}

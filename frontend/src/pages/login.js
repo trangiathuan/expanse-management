@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import API from "../configs/API";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -14,27 +15,35 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault(); // Chặn reload trang
         setLoading(true);
-        try {
-            const res = await axios.post(`${API}/user/login`, {
-                username,
-                password
-            });
 
-            if (res.data.EC == 0) {
-                toast.success("Đăng ký thành công!");
-                console.log("Register success:", res.data);
-                localStorage.setItem("token", res.data.token);
-                setTimeout(() => {
-                    navigate('/home')
-                }, 1500);
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
-        } finally {
+        const res = await axios.post(`${API}/user/login`, {
+            username,
+            password
+        });
+
+        if (res.data.EC == 0) {
+            toast.success(res.data.message);
+            console.log("Register success:", res.data);
+            localStorage.setItem("token", res.data.token);
+            setTimeout(() => {
+                navigate('/home')
+            }, 1500);
+        } else {
             setLoading(false);
+            setTimeout(() => {
+                toast.warn(res.data.message);
+            }, 200);
         }
+
     };
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center w-full mt-80">
+                <ClipLoader size={50} color="#000000" />
+            </div>
+
+        )
+    }
 
     return (
         <div className="w-full overflow-x-hidden flex justify-center bg-gray-200">
