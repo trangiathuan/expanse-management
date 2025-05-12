@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ExpenseService } from "./expense.service";
 import { CreateTotalMoneyDto } from "./DTO/total-money.dto";
 import { CreateExpenseDto } from "./DTO/expense.dto";
@@ -29,6 +29,18 @@ export class ExpenseController {
     @Post('getTotalMoney')
     getTotalMoney(@Body() body: CreateTotalMoneyDto) {
         return this.expenseService.getTotalMoney(new Types.ObjectId(body.userId))
+    }
+
+    @Post('deleteExpense')
+    deleteExpense(
+        @Body() body: { expenseId: string }) {
+        return this.expenseService.deleteExpense(body.expenseId)
+    }
+
+    @Post('updateExpense')
+    udpateExpense(
+        @Body() body: { expenseId: string, description: string }) {
+        return this.expenseService.updateExpense(body.expenseId, body.description)
     }
 
     @Get('ping')

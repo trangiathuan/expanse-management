@@ -86,6 +86,44 @@ export class ExpenseService {
         }
     }
 
+    async deleteExpense(expenseId: string) {
+        const expense = await this.expenseModel.findById(expenseId);
+        if (!expense) {
+            return;
+        }
+
+        const userTotal = await this.totalMoneyModel.findOne({ userId: expense.userId });
+        if (!userTotal) {
+            return;
+        }
+
+        let updateAmount = 0;
+        if (expense.type === 'Thu nhập') {
+            updateAmount = -expense.amount; // Giảm tổng tiền khi xóa thu nhập
+        } else {
+            updateAmount = expense.amount;  // Tăng tổng tiền khi xóa chi tiêu
+        }
+
+        await this.totalMoneyModel.updateOne(
+            { userId: expense.userId },
+            { $inc: { total: updateAmount } } // dùng $inc để cộng/trừ
+        );
+
+        await this.expenseModel.deleteOne({ _id: expenseId });
+
+        return { EC: 0, message: 'Xóa chi tiêu thành công' };
+    }
+
+    async updateExpense(expenseId: string, description: string) {
+        await this.expenseModel.updateOne(
+            { _id: expenseId },
+            { description: description }
+        );
+
+        return { EC: 0, message: 'Cập nhật thành công' };
+    }
+
+
     // private intervalId: NodeJS.Timeout;
 
     // async onModuleInit() {
@@ -106,6 +144,4 @@ export class ExpenseService {
     //         clearInterval(this.intervalId);
     //     }
     // }
-
-
 }
