@@ -34,42 +34,43 @@ const Statistical = ({ expenses }) => {
         let data = [];
 
         if (mode === "ngay" && selectedDate) {
+            // Ngày đã chọn (giờ địa phương)
             const dateSelected = new Date(selectedDate);
-            const dayStr = dateSelected.toDateString();
+            const year = dateSelected.getFullYear();
+            const month = dateSelected.getMonth();
+            const day = dateSelected.getDate();
 
-            // Lọc ra các expense trong ngày đó
+            // Lọc các expense trong ngày theo giờ VN (UTC+7)
             const filtered = expenses.filter(e => {
-                const d = new Date(e.createdAt || e.date); // ưu tiên createdAt nếu có
-                return d.toDateString() === dayStr;
+                let d = new Date(e.createdAt || e.date);
+
+                // Cộng thêm 7 giờ để thành giờ VN
+                d = new Date(d.getTime() + 7 * 60 * 60 * 1000);
+
+                return d.getFullYear() === year && d.getMonth() === month && d.getDate() === day;
             });
 
-            // Gom theo giờ
-            const hourMap = {};
+            data = filtered.map(e => {
+                // Cộng 7 giờ để lấy giờ VN
+                const d = new Date(new Date(e.createdAt || e.date).getTime() + 7 * 60 * 60 * 1000);
+                const time = d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
 
-            filtered.forEach(e => {
-                const d = new Date(e.createdAt || e.date);
-                const hour = d.getHours();
-
-                if (!hourMap[hour]) {
-                    hourMap[hour] = { income: 0, expense: 0 };
-                }
-
-                if (e.type === "Thu nhập") {
-                    hourMap[hour].income += e.amount;
-                } else if (e.type === "Chi tiêu") {
-                    hourMap[hour].expense += e.amount;
-                }
+                return {
+                    label: time,
+                    income: e.type === "Thu nhập" ? e.amount : 0,
+                    expense: e.type === "Chi tiêu" ? e.amount : 0,
+                };
             });
 
-            data = Object.entries(hourMap).map(([hour, values]) => ({
-                label: `${hour}:00`,
-                income: values.income,
-                expense: values.expense
-            }));
-
-            // Sắp xếp theo giờ
-            data.sort((a, b) => parseInt(a.label) - parseInt(b.label));
+            // Sắp xếp theo thời gian tăng dần (giờ, phút)
+            data.sort((a, b) => {
+                const [h1, m1] = a.label.split(":").map(Number);
+                const [h2, m2] = b.label.split(":").map(Number);
+                return h1 !== h2 ? h1 - h2 : m1 - m2;
+            });
         }
+
+
 
         if (mode === "thang" && selectedMonth) {
             const [month, year] = selectedMonth.split("/").map(str => parseInt(str));
