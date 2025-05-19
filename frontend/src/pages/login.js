@@ -11,10 +11,11 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
+
     useEffect(() => {
         checkLogin()
     }, [])
-    const checkLogin = () => {
+    const checkLogin = async () => {
         const token = localStorage.getItem('token')
         if (token) {
             navigate('/home')
