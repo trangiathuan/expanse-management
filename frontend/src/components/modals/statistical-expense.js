@@ -34,26 +34,30 @@ const Statistical = ({ expenses }) => {
         let data = [];
 
         if (mode === "ngay" && selectedDate) {
-            // Ngày đã chọn (giờ địa phương)
             const dateSelected = new Date(selectedDate);
             const year = dateSelected.getFullYear();
             const month = dateSelected.getMonth();
             const day = dateSelected.getDate();
 
-            // Lọc các expense trong ngày theo giờ VN (UTC+7)
             const filtered = expenses.filter(e => {
-                let d = new Date(e.createdAt || e.date);
+                const d = new Date(e.createdAt || e.date);
+                const vnDate = new Date(d.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
 
-                // Cộng thêm 7 giờ để thành giờ VN
-                d = new Date(d.getTime() + 7 * 60 * 60 * 1000);
-
-                return d.getFullYear() === year && d.getMonth() === month && d.getDate() === day;
+                return (
+                    vnDate.getFullYear() === year &&
+                    vnDate.getMonth() === month &&
+                    vnDate.getDate() === day
+                );
             });
 
             data = filtered.map(e => {
-                // Cộng 7 giờ để lấy giờ VN
-                const d = new Date(new Date(e.createdAt || e.date).getTime() + 7 * 60 * 60 * 1000);
-                const time = d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+                const d = new Date(e.createdAt || e.date);
+                const vnTime = new Date(d.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
+
+                const time = vnTime.toLocaleTimeString("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                });
 
                 return {
                     label: time,
@@ -62,13 +66,13 @@ const Statistical = ({ expenses }) => {
                 };
             });
 
-            // Sắp xếp theo thời gian tăng dần (giờ, phút)
             data.sort((a, b) => {
                 const [h1, m1] = a.label.split(":").map(Number);
                 const [h2, m2] = b.label.split(":").map(Number);
                 return h1 !== h2 ? h1 - h2 : m1 - m2;
             });
         }
+
 
 
 
