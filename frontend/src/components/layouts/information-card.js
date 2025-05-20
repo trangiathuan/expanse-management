@@ -69,7 +69,7 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
                 <QrCode onClick={() => { setQr(true) }} className="w-5 h-5 mt-2 cursor-pointer" />
             </div>
             {qr && (
-                <div className="fixed inset-0 flex justify-center pt-20 z-50 overflow-x-hidden">
+                <div className="fixed inset-0 flex justify-center pt-28 z-50 overflow-x-hidden">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="relative z-10">
                         <div className="flex w-[270px] h-[500px] bg-white rounded-lg">
