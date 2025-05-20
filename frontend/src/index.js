@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home';
 import Register from './pages/register';
 import Login from './pages/login';
+import AddQRCode from './pages/QRCode';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
+        <Route path='/QRcode' element={<AddQRCode />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

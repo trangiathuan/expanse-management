@@ -5,6 +5,7 @@ import { getMongoConfig } from './config/mongoose.config';
 import { UserModule } from './modules/users/user.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ExpenserModule } from './modules/expense/expense.module';
+import { QRCodeModule } from './modules/QRCode/qrcode.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ExpenserModule } from './modules/expense/expense.module';
     }),
     UserModule,
     ExpenserModule,
+    QRCodeModule
   ],
 })
 export class AppModule {

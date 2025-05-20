@@ -8,7 +8,7 @@ export class Expense {
     @Prop({ type: Types.ObjectId, ref: 'User', required: true })
     userId: Types.ObjectId;
 
-    @Prop({ type: String, enum: ['Đi chơi', 'Ăn uống', 'Giải trí', 'Mua sắm', 'Nhận tiền', 'Khác'], required: true })
+    @Prop({ type: String, required: true })
     category: string;
 
     @Prop({ type: String, enum: ['Thu nhập', 'Chi tiêu'], required: true })

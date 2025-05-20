@@ -108,17 +108,20 @@ const MainMenu = ({ setLoading, hiddenMoney, getExpense, getTotal, expenses, tot
     }
 
     const handleDelete = async (expenseId) => {
-        setLoading(true)
-        const results = await axios.post(`${API}/expense/deleteExpense`, { expenseId })
-        if (results.data.EC === 0) {
-            toast.success(results.data.message)
-            await getExpense()
-            await getTotal()
-            setTimeout(() => {
-                setDetail(false)
-                setLoading(false)
-            }, 100);
+        if (window.confirm('Bạn có chắc chắn muốn xóa không?')) {
+            setLoading(true)
+            const results = await axios.post(`${API}/expense/deleteExpense`, { expenseId })
+            if (results.data.EC === 0) {
+                toast.success(results.data.message)
+                await getExpense()
+                await getTotal()
+                setTimeout(() => {
+                    setDetail(false)
+                    setLoading(false)
+                }, 100);
+            }
         }
+
     }
 
     const handleUpdateExpense = async (expenseId) => {

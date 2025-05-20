@@ -1,10 +1,12 @@
 import axios from "axios";
-import { ChartNoAxesCombined, Check, Eye, EyeOff, FilePenLine, History, Menu, PlusCircle, QrCode, Settings, Trash2, X } from "lucide-react";
+import { ChartNoAxesCombined, Check, Eye, EyeOff, FilePenLine, History, LogOut, Menu, PlusCircle, QrCode, QrCodeIcon, Settings, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 import { useNavigate } from "react-router-dom";
+import API from "../../configs/API";
+
 
 
 
@@ -19,10 +21,31 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
     const [qr, setQr] = useState(false)
     const [setting, setSetting] = useState(false)
     const navigate = useNavigate()
+    const [qrImages, setQrImages] = useState([])
+
 
     useEffect(() => {
-
+        getAllQRCode();
     }, [])
+    const getAllQRCode = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const res = await axios.post(`${API}/qrcode/getAllQRCode`, {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            if (res.data.EC === 0) {
+                setQrImages(res.data.response);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (err) {
+            toast.error('Không thể lấy danh sách QR code!');
+        }
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token')
@@ -46,15 +69,17 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
                 <QrCode onClick={() => { setQr(true) }} className="w-5 h-5 mt-2 cursor-pointer" />
             </div>
             {qr && (
-                <div className="fixed inset-0 flex justify-center pt-48 z-50 overflow-x-hidden">
+                <div className="fixed inset-0 flex justify-center pt-20 z-50 overflow-x-hidden">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="relative z-10">
-                        <div className="flex w-[270px] h-[290px] bg-white rounded-lg">
+                        <div className="flex w-[270px] h-[500px] bg-white rounded-lg">
                             <div className="flex">
                                 <X onClick={() => { setQr(false) }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
                             </div>
-                            <div>
-                                <img className="rounded-lg" src='https://res.cloudinary.com/dteuqunrm/image/upload/v1745506633/QR_code_hpbssw.jpg' />
+                            <div className="overflow-y-auto p-2 text-xl font-semibold space-y-1 pt-12 pb-12 hide-scrollbar">
+                                {qrImages.map((items, index) => (
+                                    <img className="rounded-lg h-auto object-cover" src={items.url} key={index} />
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -70,10 +95,15 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
                                 <X onClick={() => { setSetting(false) }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
                             </div>
                             <div className="p-8 text-xl font-semibold space-y-1 pt-12 pb-12">
-                                <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 1</p>
+                                <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">
+                                    <a href="/QRcode" className="flex items-center">
+                                        <QrCodeIcon className="me-2" />QR Code
+                                    </a>
+                                </p>
                                 <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 2</p>
                                 <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 3</p>
-                                <p onClick={handleLogout} className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">Đăng xuất</p>
+                                <p onClick={handleLogout} className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">
+                                    <LogOut className="me-2" />Đăng xuất</p>
                             </div>
                         </div>
                     </div>

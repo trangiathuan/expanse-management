@@ -10,7 +10,6 @@ import InformationCard from "../components/layouts/information-card";
 import MainMenu from "../components/layouts/main-menu";
 
 const Home = () => {
-    const [history, setHistory] = useState(true)
     const [hiddenMoney, setHiddenMoney] = useState(false)
     const [loading, setLoading] = useState(false)
 
