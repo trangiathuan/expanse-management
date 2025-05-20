@@ -43,7 +43,7 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
                 toast.error(res.data.message);
             }
         } catch (err) {
-            toast.error('Không thể lấy danh sách QR code!');
+
         }
     }
 
@@ -94,15 +94,15 @@ const InformationCard = ({ totalMoney, hiddenMoney, setHiddenMoney }) => {
                             <div className="flex">
                                 <X onClick={() => { setSetting(false) }} className="fixed ms-[230px] pt-2 w-8 h-8 cursor-pointer" />
                             </div>
-                            <div className="p-8 text-xl font-semibold space-y-1 pt-12 pb-12">
-                                <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">
+                            <div className="p-8 text-xl font-semibold space-y-2 pt-12 pb-12">
+                                <p className="flex ps-3 bg-gray-100 w-52 rounded-lg h-12 items-center">
                                     <a href="/QRcode" className="flex items-center">
                                         <QrCodeIcon className="me-2" />QR Code
                                     </a>
                                 </p>
-                                <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 2</p>
-                                <p className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">optin 3</p>
-                                <p onClick={handleLogout} className="flex ps-1 bg-gray-100 w-52 rounded-lg h-12 items-center">
+                                <p className="flex ps-3 bg-gray-100 w-52 rounded-lg h-12 items-center">Coming soon</p>
+                                <p className="flex ps-3 bg-gray-100 w-52 rounded-lg h-12 items-center">Coming soon</p>
+                                <p onClick={handleLogout} className="flex ps-3 bg-gray-100 w-52 rounded-lg h-12 items-center">
                                     <LogOut className="me-2" />Đăng xuất</p>
                             </div>
                         </div>
