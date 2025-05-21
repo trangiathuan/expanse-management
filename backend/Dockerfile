@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8888
 
 # Run in dev mode with hot reload
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
