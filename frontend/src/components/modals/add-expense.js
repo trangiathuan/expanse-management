@@ -24,8 +24,8 @@ const AddExpense = ({ setType, setAmount, setCategory, setDate, setDescription, 
                         <option value='Mua sắm'>Mua sắm</option>
                         <option value='Giải trí'>Giải trí</option>
                         <option value='Nhận tiền'>Nhận tiền</option>
-                        <option value='Nhận tiền'>Cho vay</option>
-                        <option value='Nhận tiền'>Di chuyển</option>
+                        <option value='Cho vay'>Cho vay</option>
+                        <option value='Di chuyển'>Di chuyển</option>
                         <option value='Khác'>Khác</option>
                     </select>
                 </div>
